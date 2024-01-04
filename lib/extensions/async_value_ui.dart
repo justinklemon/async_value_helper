@@ -1,3 +1,4 @@
+import 'package:error_alert_manager/error_alert_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,38 +17,11 @@ extension AsyncValueUI on AsyncValue {
                         ClipboardData(text: error.toString())))),
           ));
 
-  void showDialogOnError(BuildContext context) {
+
+  /// Shows a dialog with the error message when the AsyncValue is an error.
+  /// Will only work if the [ref] has a [ErrorAlertProvider] in its scope and there is a [DisplayDialogOnError] in the widget tree
+  void showDialogOnError(WidgetRef ref) {
     whenOrNull(
-        error: (error, stackTrace) => showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  title: const Text('Error'),
-                  content: SingleChildScrollView(child: Text(error.toString())),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Dismiss'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Clipboard.setData(
-                            ClipboardData(text: error.toString()));
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Copy Error'),
-                    ),
-                  ],
-                )));
+        error: (error, stackTrace) => ref.read(errorAlertProvider.notifier).onError(error.toString()));
   }
-  //   void showLoadingOverlay(BuildContext context) => whenOrNull(
-  //   data: (_) => Container(),
-  //   loading: () => Stack(
-  //     fit: StackFit.expand,
-  //     children: [
-  //       ModalBarrier(dismissible: false, color: Colors.black.withOpacity(0.3)),
-  //       const Center(child: CircularProgressIndicator()),
-  //     ],
-  //   ),
-  //   error: (_, __) => Container(),
-  // );
 }
