@@ -1,6 +1,6 @@
 name: async_value_helper
 description: A new Flutter package project.
-version: 0.0.3
+version: 0.0.4
 homepage:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -14,8 +14,6 @@ dependencies:
     sdk: flutter
   #riverpod
   flutter_riverpod: ^2.4.0
-  error_alert_manager:
-    git: https://github.com/justinklemon/error_alert_provider.git
 
 
 
