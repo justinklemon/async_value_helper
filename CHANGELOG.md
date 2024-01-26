@@ -6,3 +6,5 @@ Modified the showDialogOnError function to use the error_alert_manager library. 
 Rearranged the file structure
 ## 0.0.4
 Modified the showdialogOnError function to NOT  use the error_alert_manager library, as it was too complicated. Now, it simply uses a private variable _lastError to track the last error.
+## 0.0.5
+Modified the AsyncValuesModalOnLoad widget to wrap the widget it is covering instead of relying on the user to position it properly. Now requires a 'child' widget argument.
