@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AsyncValuesModalOnLoad<T> extends ConsumerWidget {
+class AsyncValuesModalOnLoad<dynamic> extends ConsumerWidget {
   const AsyncValuesModalOnLoad({super.key, required this.providers, required this.child});
-  final List<ProviderListenable<AsyncValue<T>>> providers;
+  // covariant is used to allow the type of the providers to be different, since we don't care about the type
+  final List<covariant ProviderListenable<AsyncValue<dynamic>>> providers;
   final Widget child;
 
   @override
