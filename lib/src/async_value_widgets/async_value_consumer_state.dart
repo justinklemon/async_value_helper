@@ -9,24 +9,25 @@ abstract class AsyncValueConsumerState<T, W extends ConsumerStatefulWidget>
     super.build(context);
     return ref.watch(provider).when(
           data: (data) => onData(data),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (
-            e,
-            _,
-          ) =>
-              Center(
-            child: Text(
-              e.toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Colors.red),
-            ),
-          ),
+          loading: onLoading,
+          error: onError,
         );
   }
 
   Widget onData(T data);
+
+  Widget onLoading() {
+    return const Center(child: CircularProgressIndicator());
+  }
+
+  Widget onError(Object error, StackTrace stackTrace) {
+    return Center(
+      child: Text(
+        error.toString(),
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.red),
+      ),
+    );
+  }
 
   ProviderListenable<AsyncValue<T>> get provider;
 
