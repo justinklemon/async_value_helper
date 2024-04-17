@@ -8,7 +8,11 @@ extension DelayDispose on AutoDisposeRef {
 
     onCancel(() {
       isPaused = true;
-      future().then((value) {
+      future().then((_) {
+        if (isPaused) {
+          link.close();
+        }
+      }, onError: (Object error, StackTrace stackTrace) {
         if (isPaused) {
           link.close();
         }
