@@ -10,3 +10,4 @@ export 'src/async_value_widgets/async_checkbox_list.dart';
 
 export 'src/extensions/async_value_ui.dart';
 export 'src/extensions/delay_dispose_provider.dart';
+export 'src/extensions/transform_async_value.dart';
