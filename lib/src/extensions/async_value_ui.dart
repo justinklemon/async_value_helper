@@ -1,3 +1,4 @@
+import 'package:async_value_helper/src/dialogs/show_error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,42 +17,16 @@ extension AsyncValueUI on AsyncValue {
                         ClipboardData(text: error.toString())))),
           ));
 
-
   /// Shows a dialog with the error message when the AsyncValue is an error.
   /// If the error is the same as the last error shown with this method, the dialog will not be shown.
   void showDialogOnError(BuildContext context) {
-    whenOrNull(error: (error, stackTrace) { 
-      if (_lastError != error.toString()){
+    whenOrNull(error: (error, stackTrace) {
+      if (_lastError != error.toString()) {
         _lastError = error.toString();
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => AlertDialog(
-                title: const Text('Error'),
-                content: SingleChildScrollView(child: Text(error.toString())),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      _lastError = null;
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Dismiss'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: error.toString()));
-                      _lastError = null;
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Copy'),
-                  ),
-                ],
-              ));
+        showErrorDialog(context, _lastError!).then((_) => _lastError = null);
       }
-
     });
   }
-  
 }
 
 String? _lastError;
