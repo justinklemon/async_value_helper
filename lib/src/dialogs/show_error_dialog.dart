@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-Future<void> showErrorDialog(BuildContext context, String error) {
+class ActionForErrorDialog {
+  final String label;
+  final VoidCallback onPressed;
+
+  ActionForErrorDialog({required this.label, required this.onPressed});
+}
+
+Future<void> showErrorDialog(BuildContext context, String error, {ActionForErrorDialog? action}) {
   return showDialog(
       context: context,
       barrierDismissible: false,
@@ -22,6 +29,14 @@ Future<void> showErrorDialog(BuildContext context, String error) {
                 },
                 child: const Text('Copy'),
               ),
+              if (action != null)
+                ElevatedButton(
+                  onPressed: () {
+                    action.onPressed();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(action.label),
+                ),
             ],
           ));
 }
