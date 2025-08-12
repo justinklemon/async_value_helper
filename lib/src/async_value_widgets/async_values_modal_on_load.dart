@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AsyncValuesModalOnLoad extends ConsumerWidget {
-  const AsyncValuesModalOnLoad({super.key, required this.providers, required this.child});
+  const AsyncValuesModalOnLoad(
+      {super.key, required this.providers, required this.child});
   // covariant is used to allow the type of the providers to be different, since we don't care about the type
   final List<ProviderListenable<AsyncValue<dynamic>>> providers;
   final Widget child;
@@ -17,14 +18,11 @@ class AsyncValuesModalOnLoad extends ConsumerWidget {
           IgnorePointer(
             child: child,
           ),
-          
           Positioned.fill(
             child: Container(
-              color: Colors.grey.withOpacity(0.4),
+              color: Colors.grey.withValues(alpha: 0.4),
               child: const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black
-                ),
+                child: CircularProgressIndicator(color: Colors.black),
               ),
             ),
           )
